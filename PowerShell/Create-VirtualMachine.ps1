@@ -66,7 +66,7 @@ $nicName    = "nic-" + $Name.ToLower()
 $dnsName    = $Name.ToLower()
 $vmName     = $Name.ToLower()
 $vnetName   = "vnet-" + $Basename.ToLower()
-$snetName   = "cms"
+$snetName   = "subnet01"
 
 # disk Uri
 $storage      = Get-AzureRmStorageAccount `
@@ -121,7 +121,7 @@ if ( !$? ) {
 # create a configurable virtual machine object
 $vmConfig = New-AzureRmVMConfig `
             -VMName $vmName `
-            -Size $Size `
+            -VMSize $Size `
             -ErrorAction Stop
 if ( !$? ) {
   exit 1
