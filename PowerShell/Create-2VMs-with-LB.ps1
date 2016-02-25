@@ -9,6 +9,7 @@
 Param (
   [switch]$Help,
   [string]$Basename,
+  [ValidateSet("Standard_A1","Standard_A2","Standard_A3","Standard_A4","Standard_D1","Standard_D2","Standard_D3","Standard_D4")][string]$Size,
   [ValidateSet("japaneast", "japanwest", "eastasia", "southeastasia")][string]$Location
 )
 
@@ -131,7 +132,7 @@ $nsg = New-AzureRmNetworkSecurityGroup -Location $locName -ResourceGroupName $rg
 Print-Log "## virtual network"
 
 $vnetName   = "vnet-" + $Basename.ToLower()
-$snetName   = "cms"
+$snetName   = "subnet01"
 $vnetPrefix = "10.0.0.0/16"
 $snetPrefix = "10.0.0.0/24"
 
@@ -196,21 +197,20 @@ $cred = Get-Credential
 $list = "00","01"
 Foreach ( $val in $list ) {
   #variables
-  $pipName    = "pip-" + $Basename.ToLower() + "-" + $val
-  $nicName    = "nic-" + $Basename.ToLower() + "-" + $val
-  $dnsName    = $Basename.ToLower() + "-" + $val
-  $vmName     = $Basename.ToLower() + "-" + $val
-  $vmSize     = "Standard_A1"
+  $pipName    = "pip-" + $Basename.ToLower() + "vm" + $val
+  $nicName    = "nic-" + $Basename.ToLower() + "vm" + $val
+  $dnsName    = $Basename.ToLower() + "vm" + $val
+  $vmName     = $Basename.ToLower() + "vm" + $val
   $vnetName   = "vnet-" + $Basename.ToLower()
-  $snetName   = "cms"
+  $snetName   = "subnet01"
 
   # disk Uri
   $storage      = Get-AzureRmStorageAccount -ResourceGroupName $rgName -Name $stName `
                   -ErrorAction Stop
   $osDiskUri    = $storage.PrimaryEndpoints.Blob.ToString() + "vhds/" + "os" + $val + ".vhd"
   $dataDiskUri  = $storage.PrimaryEndpoints.Blob.ToString() + "vhds/" + "data" + $val + ".vhd"
-  $osDiskName   = $Basename.ToLower() + "os" + $val
-  $dataDiskName = $Basename.ToLower() + "data" + $val
+  $osDiskName   = $Basename.ToLower() + "vm-os" + $val
+  $dataDiskName = $Basename.ToLower() + "vm-data" + $val
 
   # create NIC
   $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -Name $vnetName -ErrorAction Stop
@@ -224,7 +224,7 @@ Foreach ( $val in $list ) {
          -LoadBalancerBackendAddressPoolId $lb.BackendAddressPools[0].Id -ErrorAction Stop
 
   # create a configurable virtual machine object
-  $vmConfig = New-AzureRmVMConfig -VMName $vmName -VMSize $vmSize `
+  $vmConfig = New-AzureRmVMConfig -VMName $vmName -VMSize $Size `
               -AvailabilitySetID $avSet.Id -ErrorAction Stop
   $vmConfig = Set-AzureRmVMOperatingSystem -VM $vmConfig -Linux `
               -ComputerName $vmName -Credential $cred -ErrorAction Stop
