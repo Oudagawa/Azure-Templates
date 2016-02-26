@@ -53,18 +53,20 @@ $vnetPrefix = "10.0.0.0/16"
 $snetPrefix = "10.0.0.0/24"
 $nsgName    = "nsg-" + $Basename.ToLower()
 
-Print-Log "==== START ===="
-Write-Host "- Resource Group Name : $rgName "
-Write-Host "- Virtual Network Name: $vnetName"
 Write-Host ""
+Write-Host "Resource Group Name : $rgName "
+Write-Host "Virtual Network Name: $vnetName"
 
 ## login
 $azaccount = Login-AzureRmAccount -ErrorAction Stop
 
 ## select subscription
 $subscription = Get-AzureRmSubscription | Out-GridView -OutputMode Single
-$subId = $subscription.SubscriptionId
-Select-AzureRmSubscription -SubscriptionId $subId -ErrorAction Stop
+$subId        = $subscription.SubscriptionId
+$status       = Select-AzureRmSubscription -SubscriptionId $subId -ErrorAction Stop
+if ( !$? ) {
+  exit 1
+}
 
 ## resource group
 New-AzureRmResourceGroup `
@@ -127,5 +129,4 @@ Set-AzureRmVirtualNetwork `
 ##############################################################################
 # end
 #
-Write-Host "==== END ===="
 exit 0
