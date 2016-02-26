@@ -48,7 +48,7 @@ $vm = Get-AzureRmVM `
       -ResourceGroupName $rgName `
       -Name $vmName `
       -status `
-      å-ErrorAction Stop
+      -ErrorAction Stop
 if ( !$? ) {
   exit 1
 }
