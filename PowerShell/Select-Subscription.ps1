@@ -45,7 +45,9 @@ $azaccount = Login-AzureRmAccount -ErrorAction Stop
 ## select subscription
 $subscription = Get-AzureRmSubscription | Out-GridView -OutputMode Single
 $subId        = $subscription.SubscriptionId
-$status       = Select-AzureRmSubscription -SubscriptionId $subId -ErrorAction Stop
+$status       = Select-AzureRmSubscription `
+                -SubscriptionId $subId `
+                -ErrorAction Stop
 if ( !$? ) {
   exit 1
 }

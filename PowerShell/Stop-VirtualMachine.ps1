@@ -44,7 +44,10 @@ if (( $Help ) -Or ( $Name -eq '' ) -Or ( $Basename -eq '' )){
 $vmName = $Name.ToLower()
 $rgName = "rg-" + $Basename.ToLower()
 
-Stop-AzureRmVM -ResourceGroupName $rgName -Name $vmName -ErrorAction Stop
+Stop-AzureRmVM `
+  -ResourceGroupName $rgName `
+  -Name $vmName `
+  -ErrorAction Stop
 
 ##############################################################################
 # end

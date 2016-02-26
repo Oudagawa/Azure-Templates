@@ -1,9 +1,9 @@
 ##############################################################################
 # name:
-# Display-VMStatus.ps1
+# Capture-VMImage.ps1
 #
 # description:
-# display status of specified virtual machine
+# capture specified virtual machine
 #
 ##############################################################################
 # variables
@@ -31,7 +31,7 @@ if (( $Help ) -Or ( $Name -eq '' ) -Or ( $Basename -eq '' )){
   Write-Host ""
   Write-Host "==== HELP ===="
   Write-Host "[USAGE]"
-  Write-Host "Display-VMStatus.ps1 -Name azexample01vm -Basename azexample01"
+  Write-Host "Capture-VMImage.ps1 -Name azexample01vm -Basename azexample01"
   Write-Host ""
   Write-Host "[PARAMETERS]"
   Write-Host "Name    : name of virtual machine"
@@ -44,16 +44,19 @@ if (( $Help ) -Or ( $Name -eq '' ) -Or ( $Basename -eq '' )){
 $vmName = $Name.ToLower()
 $rgName = "rg-" + $Basename.ToLower()
 
-$vm = Get-AzureRmVM `
-      -ResourceGroupName $rgName `
-      -Name $vmName `
-      -status `
-      å-ErrorAction Stop
-if ( !$? ) {
-  exit 1
-}
+Set-AzureRmVm `
+  -ResourceGroupName $rgName `
+  -Name $vmName `
+  -Generalized `
+  -ErrorAction Stop
 
-$vm.Statuses
+Save-AzureRmVMImage `
+  -ResourceGroupName $rgName `
+  -VMName $vmName `
+  -DestinationContainerName mytemplates `
+  -VHDNamePrefix master `
+  -ErrorAction Stop
+
 
 ##############################################################################
 # end
