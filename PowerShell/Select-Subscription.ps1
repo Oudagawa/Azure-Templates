@@ -41,10 +41,19 @@ if ( $Help ) {
 
 ## login
 $azaccount = Login-AzureRmAccount -ErrorAction Stop
+if ( !$? ) {
+  exit 1
+}
 
 ## select subscription
 $subscription = Get-AzureRmSubscription | Out-GridView -OutputMode Single
+if ( !$? ) {
+  exit 1
+}
 $subId        = $subscription.SubscriptionId
+if ( !$? ) {
+  exit 1
+}
 $status       = Select-AzureRmSubscription `
                 -SubscriptionId $subId `
                 -ErrorAction Stop
