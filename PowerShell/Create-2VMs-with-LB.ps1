@@ -57,7 +57,7 @@ if ( ( $Help ) -Or ( $Basename -eq '' ) ){
 #
 Print-Log "## login to Azure"
 
-#$azaccount = Login-AzureRmAccount -ErrorAction Stop
+$azaccount = Login-AzureRmAccount -ErrorAction Stop
 
 ##############################################################################
 # select subscription
