@@ -36,7 +36,7 @@ if ( ( $Help ) -Or ( $Basename -eq '' ) ){
   Write-Host ""
   Write-Host "==== HELP ===="
   Write-Host "[USAGE]"
-  Write-Host "New-CMS.ps1 -Basename azexample -Location japaneast"
+  Write-Host "Create-2VMs-with-LB.ps1 -Basename azexample -Location japaneast"
   Write-Host ""
   Write-Host "[PARAMETERS]"
   Write-Host "Basename: basename of resources"
