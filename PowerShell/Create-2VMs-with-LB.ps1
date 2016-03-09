@@ -197,10 +197,10 @@ $cred = Get-Credential
 $list = "00","01"
 Foreach ( $val in $list ) {
   #variables
-  $pipName    = "pip-" + $Basename.ToLower() + "vm" + $val
-  $nicName    = "nic-" + $Basename.ToLower() + "vm" + $val
-  $dnsName    = $Basename.ToLower() + "vm" + $val
-  $vmName     = $Basename.ToLower() + "vm" + $val
+  $pipName    = "pip-" + $Basename.ToLower() + "-" + $val
+  $nicName    = "nic-" + $Basename.ToLower() + "-" + $val
+  $dnsName    = $Basename.ToLower() + "-" + $val
+  $vmName     = $Basename.ToLower() + "-" + $val
   $vnetName   = "vnet-" + $Basename.ToLower()
   $snetName   = "subnet01"
 
@@ -209,8 +209,8 @@ Foreach ( $val in $list ) {
                   -ErrorAction Stop
   $osDiskUri    = $storage.PrimaryEndpoints.Blob.ToString() + "vhds/" + "os" + $val + ".vhd"
   $dataDiskUri  = $storage.PrimaryEndpoints.Blob.ToString() + "vhds/" + "data" + $val + ".vhd"
-  $osDiskName   = $Basename.ToLower() + "vm-os" + $val
-  $dataDiskName = $Basename.ToLower() + "vm-data" + $val
+  $osDiskName   = $Basename.ToLower() + "-os" + $val
+  $dataDiskName = $Basename.ToLower() + "-data" + $val
 
   # create NIC
   $vnet = Get-AzureRmVirtualNetwork -ResourceGroupName $rgName -Name $vnetName -ErrorAction Stop
