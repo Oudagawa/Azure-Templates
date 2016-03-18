@@ -1,6 +1,6 @@
 #!/bin/bash
 # name:
-# install-base.sh
+# install-base-ubuntu1404.sh
 #
 # description:
 # install base packages for cloud service
