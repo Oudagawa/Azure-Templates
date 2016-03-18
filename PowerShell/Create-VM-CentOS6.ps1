@@ -162,11 +162,11 @@ $vmConfig = Add-AzureRmVMNetworkInterface `
             -Id $nic.Id `
             -ErrorAction Stop
 $vmImage  = Get-AzureRmVMImagePublisher -Location $locName | `
-            ? PublisherName -Like "Canonical" | `
+            ? PublisherName -Like "OpenLogic" | `
             Get-AzureRmVMImageOffer | `
-            ? Offer -eq "UbuntuServer" | `
+            ? Offer -eq "CentOS" | `
             Get-AzureRmVMImageSku | `
-            ? Skus -like "14.*-LTS" | `
+            ? Skus -like "6.*" | `
             Get-AzureRmVMImage | `
             Sort-Object Version -Descending | `
             select -First 1
