@@ -145,18 +145,18 @@ $vmConfig = Set-AzureRmVMOSDisk `
 if ( !$? ) {
   exit 1
 }
-$vmConfig = Add-AzureRmVMDataDisk `
-            -VM $vmConfig `
-            -Name $dataDiskName `
-            -VhdUri $dataDiskUri `
-            -Caching "ReadWrite" `
-            -CreateOption "Empty" `
-            -DiskSizeInGB 60 `
-            -Lun 0 `
-            -ErrorAction Stop
-if ( !$? ) {
-  exit 1
-}
+#$vmConfig = Add-AzureRmVMDataDisk `
+#            -VM $vmConfig `
+#            -Name $dataDiskName `
+#            -VhdUri $dataDiskUri `
+#            -Caching "ReadWrite" `
+#            -CreateOption "Empty" `
+#            -DiskSizeInGB 60 `
+#            -Lun 0 `
+#            -ErrorAction Stop
+#if ( !$? ) {
+#  exit 1
+#}
 $vmConfig = Add-AzureRmVMNetworkInterface `
             -VM $vmConfig `
             -Id $nic.Id `
